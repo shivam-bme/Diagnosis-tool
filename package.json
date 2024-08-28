@@ -1,0 +1,42 @@
+{
+  "name": "shivam_singh",
+  "version": "1.0.0",
+  "description": "the Segmentation model ",
+  "main": "server.js",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.20.0",
+    "@tensorflow/tfjs-converter": "^4.20.0",
+    "@tensorflow/tfjs-node": "^4.4.0",
+    "@tensorflow/tfjs-node-gpu": "^4.4.0",
+    "canvas": "^2.11.2",
+    "child_process": "^1.0.2",
+    "dicom-parser": "^1.8.21",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "init": "^0.1.2",
+    "itk": "^9.0.0",
+    "jsdom": "^22.0.0",
+    "multer": "^1.4.5-lts.1",
+    "nifti-reader-js": "^0.6.8",
+    "node-canvas-webgl": "^0.3.0",
+    "node-fetch": "^3.3.2",
+    "nvm": "0.0.4",
+    "onnxruntime-node": "^1.18.0",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.32.6",
+    "zlib": "^1.0.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/github.com/profesheeku.git"
+  },
+  "author": "Shivam singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/github.com/profesheeku/issues"
+  },
+  "homepage": "https://github.com/github.com/profesheeku#readme"
+}

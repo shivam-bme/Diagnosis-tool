@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  
+  button[type="submit"] {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#result {
+  display: none;
+  margin-top: 50px;
+  text-align: center;
+}
+
+#result img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+#mask-image{
+  
+  align-items:left;
+  border-radius: 18px;
+  position: fixed;
+  display: inline-block;
+  top: 290px;
+  left: 25%;
+  width: 350px;
+  height: 340px;
+  
+  transform: translateX(-40%);
+}
+#upload-image{
+  position: fixed;
+  top: 290px;
+  right: 10%;
+  align-items: right;
+  display: inline-block;
+  width: 350px;
+  height: 340px;
+  border-radius: 18px;
+  transform: translate(-10%);
+}
+#tumor-heading{
+  position: fixed;
+  top: 245px;
+  left: 25%;
+  transform: translateX(-50%);
+
+}
+#upload-heading{
+  position: fixed;
+  top: 245px;
+  right: 9%;
+  transform: translateX(-20%);
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumor Segmentation</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    <script src="/server.js"></script>
+    <h1>tumor Segmentation</h1>
+    <form method="post" enctype="multipart/form-data" action="/tumor">
+        <label for="image-upload">upload TIFF Image only :</label>
+
+        <input type="file" name="image" id="file" accept=".tif,.png,.jpeg">
+        <br>
+        <button id="segment-button" type="submit">submit</button>
+    </form>
+    
+    
+  <p>
+   <img id="mask-image" />
+   </p>
+</body>
+</html>

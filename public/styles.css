@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #8e029b;
+    color: white;
+    padding: 1em 1em;
+    text-align: center;
+    justify-content: space-between;
+    
+}
+
+#logo img{
+    max-width: 100px;
+    height: auto;
+}
+
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7em 2em;
+    background-color: #ffffff;
+}
+.sbme {
+    flex-grow: 1;
+    display: flex;
+    padding: 0em 5em;
+
+}
+.emblemIIT {
+    display: flex;
+    height: auto;
+    max-width: 30%;
+    padding: 0em 2em;
+
+}
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.ai_image {
+    height: 50%;
+    display:flex;
+    justify-content: center;
+    width: 50%;
+    gap: 4em;
+    margin:1em 20em ;
+    border: 1px solid #ffffff;
+    border-radius: 15px;
+}
+
+#tumor-segmentation-div{
+    margin: 13em ;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    gap: 4em;
+}
+.flex-container2 {
+    display: flex;
+    align-items: center;
+}
+.flex-container2 img.round-image {
+    border-radius: 10px;
+    height: 40%;
+    max-width: 50%;
+}
+.flex-container img.round-image {
+    border-radius: 10px;
+    max-width: 40%;
+    height: auto;
+}
+
+.flex-container .flex-paragraph {
+    margin: 0;
+    flex: 1;
+}
+
+nav li {
+    display: inline;
+    margin: 0 3.5em;
+    color: #f9f9f9;
+}
+
+nav a {
+    color: white;
+    text-decoration:solid;
+    font: bold;
+    cursor: pointer;
+}
+nav a:hover{
+    color: orange;
+}
+
+main {
+    padding: 2em;
+}
+
+section {
+    margin-bottom: 2em;
+}
+
+h2 {
+    color: #004d40;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: #8e029b;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
