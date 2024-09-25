@@ -656,7 +656,7 @@ app.get('/lung.html', (req, res) => {
 
 app.post('/lung', upload.single('image'), (req, res) => {
     //console.log('File MIME type:', req.file.mimetype);
-    handleClassificationPrediction(req, res, '/home/shivam_singh/Downloads/my_models/tfjs_model/model.json', path.join(__dirname, 'lung.html'));
+    handleClassificationPrediction(req, res, '/tfjs_model/model.json', path.join(__dirname, 'lung.html'));
     console.log('handled output');
 });
 app.get('/liver.html',(req,res)=>{
