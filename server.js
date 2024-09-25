@@ -626,7 +626,7 @@ app.get('/Tumor.html',upload.single('image') ,(req, res) => {
 
 app.post('/tumor', upload.single('image'), (req, res) => {
     console.log('Received POST request for /tumor');
-    handleModelPrediction(req, res, '/home/shivam_singh/Downloads/tfjs2_model/model.json', path.join(__dirname, 'Tumor.html'));
+    handleModelPrediction(req, res, '/tfjs2_model/model.json', path.join(__dirname, 'Tumor.html'));
 });
 
 app.get('/bone.html', (req, res) => {
