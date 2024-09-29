@@ -709,7 +709,7 @@ app.get('/Portfolio.html',(req,res)=>{
 });
 app.post('/bone', upload.single('image'), (req, res) => {
     console.log('recived ');
-    handleBoundingBoxPrediction(req, res, '/best.onnx', path.join(__dirname, 'bone.html'));
+    handleBoundingBoxPrediction(req, res, './best.onnx', path.join(__dirname, 'bone.html'));
     console.log('handled output');
 
 });
@@ -721,14 +721,14 @@ app.get('/lung.html', (req, res) => {
 
 app.post('/lung', upload.single('image'), (req, res) => {
     //console.log('File MIME type:', req.file.mimetype);
-    handleClassificationPrediction(req, res, '/tfjs_model/model.json', path.join(__dirname, 'lung.html'));
+    handleClassificationPrediction(req, res, './tfjs_model/model.json', path.join(__dirname, 'lung.html'));
     console.log('handled output');
 });
 app.get('/liver.html',(req,res)=>{
     res.sendFile(path.join(__dirname,'liver.html'))
 });
 app.post('/liver',upload.single('image'),(req,res)=>{
-    handleliverclass(req, res, '/models/model.onnx', path.join(__dirname,'liver.html'))
+    handleliverclass(req, res, './models/model.onnx', path.join(__dirname,'liver.html'))
 })
 // Start the server
 app.listen(port, () => {
