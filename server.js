@@ -271,25 +271,53 @@ const handleClassificationPrediction = async (req, res, modelPath, htmlPath) => 
         console.log('input & output',inputName1, outputNames1)
         const inputName = 'input_tensor'; // Replace with your actual input tensor name
         const outputNames = [
-            'Identity', 'Identity_1', 'Identity_2', 'Identity_3', 
-            'Identity_4', 'Identity_5', 'Identity_6', 'Identity_7'
-        ]; // Replace with your actual output tensor names
-
+            'Identity:0',            // Bounding box coordinates
+            'detection_boxes',           // Confidence scores
+            'Identity_2:0',          // Class predictions
+            'detection_multiclass_scores', // Number of valid detections
+            'Identity_4:0',
+            'num_detections',
+            'raw_detection_boxes',
+            'raw_detection_scores'
+        
+        ];
+        
         // Create a dictionary for inputs
         const inputs = {};
-        inputs[inputName] = input2.cast('int32');
+        inputs[inputName] = input.cast('int32');
 
         // Execute the model asynchronously
         const prediction = await model.executeAsync(inputs, outputNames);
         //console.log('Prediction:', prediction);
-
-        const [boxes, scores, classes, valid_detections] = prediction;
+        const [Identity0, boxes, classes, scores, Identity2, valid_detections,rawBoxes,rawScores] = prediction;
+        console.log('I)',rawScores.arraySync()[0]);
+        function calculateIoU(boxA, boxB) {
+            const [x1A, y1A, x2A, y2A] = boxA;
+            const [x1B, y1B, x2B, y2B] = boxB;
+        
+            const xA = Math.max(x1A, x1B);
+            const yA = Math.max(y1A, y1B);
+            const xB = Math.min(x2A, x2B);
+            const yB = Math.min(y2A, y2B);
+        
+            const interArea = Math.max(0, xB - xA) * Math.max(0, yB - yA);
+            const boxAArea = (x2A - x1A) * (y2A - y1A);
+            const boxBArea = (x2B - x1B) * (y2B - y1B);
+        
+            const iou = interArea / (boxAArea + boxBArea - interArea);
+            return iou;
+        }
         
         // Convert tensors to arrays
         const boxesArr = boxes.arraySync()[0];
         const scoresArr = scores.arraySync()[0];
         const classesArr = classes.arraySync()[0];
         const validDetections = valid_detections.arraySync()[0];
+        const Identity_0 = Identity0.arraySync()[0];
+        const Identity_2 = Identity2.arraySync()[0];
+        const rawboxes =  rawBoxes.arraySync()[0];
+        const rawscore = rawScores.arraySync()[0];
+        
         console.log('boxes',boxesArr,'scoresArr',scoresArr,'classesArr',classesArr,'what detected',validDetections); 
         // Draw bounding boxes on the image
         const canvas = createCanvas(1024, 1024);
@@ -299,15 +327,52 @@ const handleClassificationPrediction = async (req, res, modelPath, htmlPath) => 
 
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 2;
+            // Calculate IoU between raw boxes and detection boxes, find highest IoU for each detection box
+        const bestMatches = [];
+
         for (let i = 0; i < validDetections; i++) {
-            const [y1, x1, y2, x2] = boxesArr[i];
-            const score = scoresArr[i];
-            const className = classesArr[i];
-            ctx.strokeRect(x1 * 224, y1 * 224, (x2 - x1) * 224, (y2 - y1) * 224);
-            ctx.fillText(`Class: ${className}, Score: ${score.toFixed(2)}`, x1 * 224, y1 * 224 - 10);
-            console.log('ss',className,score)
+            const [y1_det, x1_det, y2_det, x2_det] = boxesArr[i];
+            let bestIoU = 0;
+            let bestRawBoxIndex = -1;
+    
+            // Iterate through raw boxes to find the highest IoU match
+            for (let j = 0; j < rawboxes.length; j++) {
+                const [y1_raw, x1_raw, y2_raw, x2_raw] = rawboxes[j];
+                const iou = calculateIoU([x1_raw, y1_raw, x2_raw, y2_raw], [x1_det, y1_det, x2_det, y2_det]);
+
+                if (iou > 0.955) {
+                    bestIoU = iou;
+                    bestRawBoxIndex = j;
+                }
+            }
+
+            if (bestRawBoxIndex !== -1) {
+                bestMatches.push({
+                detectionBox: boxesArr[i],
+                detectionScore: scoresArr[i],
+                detectionClass: classesArr[i],
+                rawBox: rawboxes[bestRawBoxIndex],
+                rawScore: rawscore[bestRawBoxIndex],
+                iou: bestIoU
+            });
+            }
         }
 
+        // Draw the filtered bounding boxes with highest IoU
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 2;
+
+        bestMatches.forEach(match => {
+            const [y1, x1, y2, x2] = match.detectionBox;
+            const score = match.detectionScore;
+            const className = match.detectionClass;
+
+            // Draw detection box
+            ctx.strokeRect(x1 * 1024, y1 * 1024, (x2 - x1) * 1024, (y2 - y1) * 1024);
+            ctx.fillText(`Class: ${className}, Score: ${Number(score).toFixed(2)}`, x1 * 1024, y1 * 1024 - 10);
+            console.log(`Detected: Class: ${className}, Score: ${score}, IoU: ${match.iou}`);
+    
+        });
         const outputBuffer = canvas.toBuffer('image/png');
 
         const base64String2 = Buffer.from(imgBuffer).toString('base64');
