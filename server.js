@@ -709,7 +709,7 @@ app.get('/Portfolio.html',(req,res)=>{
 });
 app.post('/bone', upload.single('image'), (req, res) => {
     console.log('recived ');
-    handleBoundingBoxPrediction(req, res, '/home/shivam_singh/train3_gpu/weights/best.onnx', path.join(__dirname, 'bone.html'));
+    handleBoundingBoxPrediction(req, res, '/best.onnx', path.join(__dirname, 'bone.html'));
     console.log('handled output');
 
 });
@@ -728,7 +728,7 @@ app.get('/liver.html',(req,res)=>{
     res.sendFile(path.join(__dirname,'liver.html'))
 });
 app.post('/liver',upload.single('image'),(req,res)=>{
-    handleliverclass(req, res, '/home/shivam_singh/Downloads/my_models/model.onnx', path.join(__dirname,'liver.html'))
+    handleliverclass(req, res, '/models/model.onnx', path.join(__dirname,'liver.html'))
 })
 // Start the server
 app.listen(port, () => {
